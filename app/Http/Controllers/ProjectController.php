@@ -24,11 +24,6 @@ class ProjectController extends Controller
             $projects[] = Project::where('id', $project->id)->get();
         }
         $data = array('projects' => $projects);
-        $tests = DB::table('projects')
-            ->join('users', 'project_user.user_id', '=', 'users.id')
-            ->join('project_user', 'projects.id', '=', 'project_user.project_id')
-            ->where('project_user.user_id','project_user.project_id')
-            ->get();
         var_dump($tests);
         exit();
         return view('projects', $data);
