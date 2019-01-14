@@ -19,6 +19,7 @@ class ProjectController extends Controller
 
     public function ListProjects()
     {
+        session()->forget('project_id');
         $projects = Project::where('user_id', Auth::id())->get();
         $data = array('projects' => $projects);
         return view('projects', $data);
@@ -58,6 +59,9 @@ class ProjectController extends Controller
         $project->user_id = Auth::id();
         if (isset($request->image)) {
         $project->image_path = $request->file('image')->store('images','public');
+        }
+        else{
+            $project->image_path = "Don't have image";
         }
         $project->save();
 

@@ -22,22 +22,6 @@ Route::get('/delete_project/{id}','ProjectController@DeleteProject')->name('dele
 
 Route::get('/tasks/{project_id}','TaskController@ListTasks')->name('tasks');
 Route::get('/task_add_edit/{id?}','TaskController@AddEditTask')->name('task_add_edit');
-
-
-
-
-
-
-
-
-Route::get('/TasksList/{projectId}','UserController@listTasks')->name('TasksList');
-Route::get('/AddTask','UserController@addTask')->name('AddTask');
-Route::get('/EditTask','UserController@editTask')->name('EditTask');
-Route::post('/insertTask','UserController@insertTask')->name('insertTask');
-Route::get('/delProject/{del}','UserController@delProject')->name('delProject');
-Route::get('/delProject/{del}','UserController@delProject')->name('delProject');
-Route::get('/delProject/{del}','UserController@delProject')->name('delProject');
-
-
-
-
+Route::post('/insertTask/{id}','TaskController@InsertTask')->name('insert_task');
+Route::get('/delete_task/{id}','TaskController@DeleteTask')->name('delete_task');
+Route::get('/change_status/{id}','TaskController@ChangeStatus')->name('change_status');

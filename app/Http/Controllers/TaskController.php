@@ -17,6 +17,7 @@ class TaskController extends Controller
 
     public function ListTasks($project_id)
     {
+        session(['project_id' => $project_id]);
         $tasks = Task::where('project_id',$project_id)->get();
         $data = array('tasks' => $tasks);
         return view('tasks', $data);
@@ -33,4 +34,42 @@ class TaskController extends Controller
         return view('task_add_edit', $data);
     }
 
- }
+    public function InsertTask($id, Request $request)
+    {
+        if ($id) {
+          $task = Task::find($id);
+        }
+        else {
+          $task = new Task;
+        }  
+        $validation = $request->validate([
+            'name' => 'required',
+        ]);
+
+        $task->name = $request->name;
+        $task->status = 0;
+        $task->priority = $request->priority;
+        $task->project_id = session('project_id');
+        $task->save();
+        return redirect()->route('tasks', session('project_id'));
+    }
+
+    public function DeleteTask($id)
+    {
+        Task::where('id', $id)->delete();
+        return redirect()->route('tasks', session('project_id'));
+    }
+
+    public function ChangeStatus($id)
+    {
+        $task = Task::find($id);
+        if ($task->status == 0) {
+            $task->status = 1;
+        }
+        else{
+            $task->status = 0;
+        }
+        $task->save();
+        return redirect()->route('tasks', session('project_id'));
+    }
+}

@@ -19,7 +19,7 @@
   @foreach ($projects as $project)
   <tr>
   <td>{{$project->id}}</td>
-  <td><a href="{{ asset('storage/'.$project->image_path) }}" target="_blank"><img src="{{ asset('storage/'.$project->image_path) }}" alt="image" width="100px"></a></td>
+  <td><a href="{{ asset('storage/'.$project->image_path) }}" target="_blank"><img src="{{ asset('storage/'.$project->image_path) }}" width="100px"></a></td>
   <td>{{$project->name}}</td>
   <td>{{$project->description}}</td>
   <td>{{$project->created_at}}</td>
