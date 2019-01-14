@@ -31,6 +31,8 @@ Route::get('/AddTask','UserController@addTask')->name('AddTask');
 Route::get('/EditTask','UserController@editTask')->name('EditTask');
 Route::post('/insertTask','UserController@insertTask')->name('insertTask');
 Route::get('/delProject/{del}','UserController@delProject')->name('delProject');
+Route::get('/delProject/{del}','UserController@delProject')->name('delProject');
+Route::get('/delProject/{del}','UserController@delProject')->name('delProject');
 
 
 
