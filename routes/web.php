@@ -25,3 +25,7 @@ Route::get('/task_add_edit/{id?}','TaskController@AddEditTask')->name('task_add_
 Route::post('/insertTask/{id}','TaskController@InsertTask')->name('insert_task');
 Route::get('/delete_task/{id}','TaskController@DeleteTask')->name('delete_task');
 Route::get('/change_status/{id}','TaskController@ChangeStatus')->name('change_status');
+
+Route::get('/other_projects','AdminController@OtherProjects')->name('other_projects');
+Route::get('/users_list','AdminController@ListUsers')->name('users_list');
+

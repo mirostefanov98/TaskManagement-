@@ -40,6 +40,13 @@
             <li class="nav-item">
               <a class="nav-link" href="{{route('projects')}}">Projects</a>
             </li>
+            @if(Auth::user()->is_admin == 1)
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('other_projects')}}">Projects of other users</a>
+            </li><li class="nav-item">
+              <a class="nav-link" href="{{route('users_list')}}">Users</a>
+            </li>
+            @endif
             @endauth
             @guest
                 <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>

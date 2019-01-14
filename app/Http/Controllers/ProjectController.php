@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Storage;
 class ProjectController extends Controller
 {
     public function __construct()
-    {
+    {    
+        session()->forget('project_id');
         $this->middleware('auth');
     }
 
     public function ListProjects()
     {
-        session()->forget('project_id');
         $projects = Project::where('user_id', Auth::id())->get();
         $data = array('projects' => $projects);
         return view('projects', $data);
@@ -71,10 +71,15 @@ class ProjectController extends Controller
     public function DeleteProject($id)
     {
         $project = Project::find($id);
+        $userID = $project->user_id;
         Storage::disk('public')->delete($project->image_path);
         Project::where('id', $id)->delete();
         Task::where('project_id', $id)->delete();
-        return redirect()->route('projects');
+        if ($userID != Auth::id()) {
+            return redirect()->route('other_projects');
+        }else{
+            return redirect()->route('projects');
+        }
     }
 
 }
