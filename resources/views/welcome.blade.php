@@ -2,7 +2,7 @@
 @section('content')
 <div class="content">
     <div class="title m-b-md">
-        TaskManegment
+        <h1 class="text-center ">TaskManegment</h1>
     </div>
 </div>
 @endsection
