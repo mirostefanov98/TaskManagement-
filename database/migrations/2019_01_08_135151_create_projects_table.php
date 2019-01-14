@@ -17,7 +17,11 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('description', 255);
+            $table->string('image_path', 255);
+            $table->unsignedInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

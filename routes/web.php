@@ -18,6 +18,10 @@ Route::get('/','HomeController@welcome')->name('welcome');
 Route::get('/projects','ProjectController@ListProjects')->name('projects');
 Route::get('/project_add_edit/{id?}','ProjectController@AddEditProject')->name('project_add_edit');
 Route::post('/insertProject/{id}','ProjectController@InsertProject')->name('insert_project');
+Route::get('/delete_project/{id}','ProjectController@DeleteProject')->name('delete_project');
+
+Route::get('/tasks/{project_id}','TaskController@ListTasks')->name('tasks');
+Route::get('/task_add_edit/{id?}','TaskController@AddEditTask')->name('task_add_edit');
 
 
 

@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
-use App\ProjectUser;
+use App\Task;
 use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -18,14 +19,8 @@ class ProjectController extends Controller
 
     public function ListProjects()
     {
-        $user=Auth::user();
-        $projects=array();
-        foreach ($user->projectsOfuser as $project) {
-            $projects[] = Project::where('id', $project->id)->get();
-        }
+        $projects = Project::where('user_id', Auth::id())->get();
         $data = array('projects' => $projects);
-        var_dump($tests);
-        exit();
         return view('projects', $data);
     }
 
@@ -47,14 +42,34 @@ class ProjectController extends Controller
         }
         else {
           $project = new Project;
-        }
+        }        
+        $validation = $request->validate([
+            'name' => 'required',
+            'desc' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+        ],[
+            'name.required' => 'Моля въведете име!',
+            'desc.required' => 'Моля въведете Описание!',
+            'image.image' => 'Само формат на изображения',
+        ]);
+
         $project->name = $request->name;
         $project->description = $request->desc;
+        $project->user_id = Auth::id();
+        if (isset($request->image)) {
+        $project->image_path = $request->file('image')->store('images','public');
+        }
         $project->save();
-        $projectuser = new ProjectUser;
-        $projectuser->project_id = $project->id;
-        $projectuser->user_id =  Auth::user()->id;
-        $projectuser->save();
+
+        return redirect()->route('projects');
+    }
+
+    public function DeleteProject($id)
+    {
+        $project = Project::find($id);
+        Storage::disk('public')->delete($project->image_path);
+        Project::where('id', $id)->delete();
+        Task::where('project_id', $id)->delete();
         return redirect()->route('projects');
     }
 

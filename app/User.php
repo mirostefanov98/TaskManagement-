@@ -28,8 +28,4 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function projectsOfuser()
-    {
-        return $this->belongsToMany('App\Project', 'project_user', 'user_id', 'project_id');
-    }
 }
