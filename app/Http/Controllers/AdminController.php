@@ -9,6 +9,8 @@ use App\User;;
 use Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\CheckAdmin;
+use Illuminate\Support\Facades\Storage;
+
 
 class AdminController extends Controller
 {
@@ -31,6 +33,18 @@ class AdminController extends Controller
         $users = User::where('is_admin',0)->get();
         $data = array('users' => $users);
         return view('users_list', $data);
+    }
+
+    public function DeleteUser($id)
+    {
+       $projects = Project::where('user_id', $id)->get();
+       foreach ($projects as $project) {
+            Task::where('project_id', $project->id)->delete();
+            Storage::disk('public')->delete($project->image_path);
+       }
+       Project::where('user_id', $id)->delete();
+       User::where('id', $id)->delete();
+       return redirect()->route('users_list');
     }
 
 }

@@ -1,32 +1,27 @@
 @extends('layout')
 @section('content')
 <div class="row">
-	<div class="col-3">
-	  <h1>Projects List</h1>
+	<div class="col-10">
+	  <h1>Users List</h1>
 	</div>
-	<div class="col-9 text-right">
-	  <a href="{{ route('project_add_edit') }}"><button type="button" class="btn btn-default">Add new project</button></a>
+	<div class="col-2 text-right">
 	</div>
 </div>
 <table class="table table-bordered">
   <tr>
     <th>ID</th>
-    <th>Image</th>
     <th>Name</th>
-    <th>Description</th>
+    <th>Email</th>
     <th>Date</th>
     <th>Actions</th>
-  @foreach ($projects as $project)
+  @foreach ($users as $user)
   <tr>
-  <td>{{$project->id}}</td>
-  <td><a href="{{ asset('storage/'.$project->image_path) }}" target="_blank"><img src="{{ asset('storage/'.$project->image_path) }}" width="100px"></a></td>
-  <td>{{$project->name}}</td>
-  <td>{{$project->description}}</td>
-  <td>{{$project->created_at}}</td>
+  <td>{{$user->id}}</td>
+  <td>{{$user->name}}</td>
+  <td>{{$user->email}}</td>
+  <td>{{$user->created_at}}</td>
   <td class="text-center">
-    <a class="btn btn-default" href="{{ route('tasks', $project->id) }}" role="button"><i class="fas fa-tasks"></i></a> / 
-    <a class="btn btn-default" href="{{ route('project_add_edit', $project->id) }}" role="button"><i class="fas fa-pencil-alt"></i></a> / 
-    <a class="btn btn-default" href="{{ route('delete_project', $project->id) }}" role="button"><i class="fas fa-trash-alt"></i></a>
+    <a class="btn btn-default" href="{{ route('delete_user', $user->id) }}" role="button"><i class="fas fa-trash-alt"></i></a>
   </td>
   </tr>
   @endforeach

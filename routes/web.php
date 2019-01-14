@@ -28,4 +28,5 @@ Route::get('/change_status/{id}','TaskController@ChangeStatus')->name('change_st
 
 Route::get('/other_projects','AdminController@OtherProjects')->name('other_projects');
 Route::get('/users_list','AdminController@ListUsers')->name('users_list');
+Route::get('/delete_user/{id}','AdminController@DeleteUser')->name('delete_user');
 

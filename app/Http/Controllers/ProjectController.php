@@ -58,7 +58,7 @@ class ProjectController extends Controller
         $project->description = $request->desc;
         $project->user_id = Auth::id();
         if (isset($request->image)) {
-        $project->image_path = $request->file('image')->store('images','public');
+        $project->image_path = $request->file('image')->store('images/'.$request->name,'public');
         }
         else{
             $project->image_path = "Don't have image";
