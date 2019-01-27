@@ -30,7 +30,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="{{route('welcome')}}">TaskManagement</a>
+        <a class="navbar-brand" href="{{route('projects')}}">TaskManagement</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,11 +38,11 @@
           <ul class="navbar-nav ml-auto">
             @auth
             <li class="nav-item">
-              <a class="nav-link" href="{{route('projects')}}">Projects</a>
+              <a class="nav-link" href="{{route('projects')}}">My projects</a>
             </li>
             @if(Auth::user()->is_admin == 1)
             <li class="nav-item">
-              <a class="nav-link" href="{{route('other_projects')}}">Projects of other users</a>
+              <a class="nav-link" href="{{route('other_projects')}}">Projects</a>
             </li><li class="nav-item">
               <a class="nav-link" href="{{route('users_list')}}">Users</a>
             </li>

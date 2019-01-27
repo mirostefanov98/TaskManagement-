@@ -20,7 +20,7 @@ class ProjectController extends Controller
 
     public function ListProjects()
     {
-        $projects = Project::where('user_id', Auth::id())->get();
+        $projects = Project::where('user_id', Auth::id())->paginate(3);
         $data = array('projects' => $projects);
         return view('projects', $data);
     }
@@ -47,11 +47,11 @@ class ProjectController extends Controller
         $validation = $request->validate([
             'name' => 'required',
             'desc' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'mimes:jpeg,jpg,png | max:1000',
         ],[
             'name.required' => 'Моля въведете име!',
             'desc.required' => 'Моля въведете Описание!',
-            'image.image' => 'Само формат на изображения',
+            'image.mimes' => 'Само формат на изображения',
         ]);
 
         $project->name = $request->name;
@@ -80,6 +80,18 @@ class ProjectController extends Controller
         }else{
             return redirect()->route('projects');
         }
+    }
+
+    public function SearchProject(Request $request)
+    {
+        $searchKey = $request->searchKey;
+        $oldprojects = Project::query()
+                           ->where('name', 'LIKE', "%{$searchKey}%") 
+                           ->orwhere('description', 'LIKE', "%{$searchKey}%") 
+                           ->get(); 
+        $projects = $oldprojects->where('user_id', Auth::id());
+        $data = array('projects' => $projects);
+        return view('search_project', $data);
     }
 
 }

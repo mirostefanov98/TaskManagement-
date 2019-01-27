@@ -23,14 +23,14 @@ class AdminController extends Controller
 
     public function OtherProjects()
     {
-        $projects = Project::where('user_id','<>',Auth::id())->get();
+        $projects = Project::all();
         $data = array('projects' => $projects);
         return view('other_projects', $data);
     }
 
     public function ListUsers()
     {
-        $users = User::where('is_admin',0)->get();
+        $users = User::all();
         $data = array('users' => $users);
         return view('users_list', $data);
     }
@@ -45,6 +45,17 @@ class AdminController extends Controller
        Project::where('user_id', $id)->delete();
        User::where('id', $id)->delete();
        return redirect()->route('users_list');
+    }
+
+    public function SearchProject(Request $request)
+    {
+        $searchKey = $request->searchKey;
+        $projects = Project::query()
+                           ->where('name', 'LIKE', "%{$searchKey}%") 
+                           ->orwhere('description', 'LIKE', "%{$searchKey}%") 
+                           ->get(); 
+        $data = array('projects' => $projects);
+        return view('search_project', $data);
     }
 
 }

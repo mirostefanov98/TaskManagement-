@@ -18,8 +18,10 @@ class TaskController extends Controller
     public function ListTasks($project_id)
     {
         session(['project_id' => $project_id]);
-        $tasks = Task::where('project_id',$project_id)->get();
-        $data = array('tasks' => $tasks);
+        $project = Project::where('id',$project_id)->first();
+        $tasks = Task::where('project_id',$project_id)->orderBy('priority', 'desc')->paginate(3);
+        $data = array('project' => $project,
+                    'tasks' => $tasks );
         return view('tasks', $data);
     }
 

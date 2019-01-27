@@ -44,5 +44,4 @@
   </tr>
   @endforeach
 </table>
-<div class="row justify-content-center">{{ $projects->links() }}</div>
 @endsection
